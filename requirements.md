@@ -74,3 +74,9 @@ Styled components (not tailwind?)
 react query
 context API for UI state
 form management library React Hook Form
+
+Bookings
+Cabins
+Guests
+Settings
+Users
