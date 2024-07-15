@@ -12,11 +12,13 @@ export async function getCabins() {
 export async function createOrEditCabin(new_cabin, id) {
   const hasImagePath = new_cabin.image?.startsWith?.(supabaseUrl);
   const imageName = `${Math.random()}-${new_cabin.image.name}`.replace("/","");
-  const imagePath = hasImagePath ? new_cabin.image : `${supabaseUrl}/storage/v1/object/public/cabin-images/${imageName}`;
+  const imagePath = hasImagePath ?
+    new_cabin.image
+    :
+    `${supabaseUrl}/storage/v1/object/public/cabin-images/${imageName}`;
 
   // const duplicateName = "0.047097928104704145-snake.jpg";
   // const duplicatePath = "https://ctclrfjhrxsebgoysfiu.supabase.co/storage/v1/object/public/cabin-images/0.047097928104704145-snake.jpg";
-
 
   // create new cabin in cabins table
   let query = supabase.from("cabins"); // querybuilder doesn't send my request until I await or .then()
