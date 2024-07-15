@@ -11,7 +11,7 @@ import Textarea from "../../ui/Textarea";
 
 import { createCabin } from "../../services/apiCabins";
 
-function CreateCabinForm({ cabinToEdit }) {
+function CreateCabinForm() {
   const { register, handleSubmit, reset, getValues, formState } = useForm();
   const { errors } = formState;
 
@@ -21,7 +21,7 @@ function CreateCabinForm({ cabinToEdit }) {
     onSuccess: () => {
       toast.success("New cabin successfully created");
       queryClient.invalidateQueries({
-        queryKey: ["cabin"]
+        queryKey: ["cabins"]
       });
       reset();
     },
@@ -136,7 +136,7 @@ function CreateCabinForm({ cabinToEdit }) {
 
       <FormRow>
         {/* type is an HTML attribute! */}
-        <Button variation="secondary" type="reset">
+        <Button $variation="secondary" type="reset">
           Cancel
         </Button>
         <Button disabled={isCreating}>Add cabin</Button>
