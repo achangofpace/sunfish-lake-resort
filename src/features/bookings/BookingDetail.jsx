@@ -13,6 +13,9 @@ import Spinner from "../../ui/Spinner";
 import { useMoveBack } from "../../hooks/useMoveBack";
 import { useBooking } from "./useBooking";
 import { useCheckout } from "../check-in-out/useCheckout";
+import { useDeleteBooking } from "./useDeleteBooking";
+import Modal from "../../ui/Modal";
+import ConfirmDelete from "../../ui/ConfirmDelete";
 
 const HeadingGroup = styled.div`
   display: flex;
@@ -25,6 +28,7 @@ function BookingDetail() {
   const moveBack = useMoveBack();
   const navigate = useNavigate();
   const { checkout, isCheckingOut } = useCheckout();
+  const { deleteBooking, isDeletingBooking } = useDeleteBooking();
 
   if (isPending) {
     return <Spinner />;
@@ -50,6 +54,7 @@ function BookingDetail() {
 
       <BookingDataBox booking={booking} />
 
+      <Modal>
       <ButtonGroup>
         {status === "unconfirmed" && (
           <Button
@@ -66,10 +71,24 @@ function BookingDetail() {
             Check out
           </Button>
         )}
+        <Modal.Open opens="page-delete-booking">
+          <Button disabled={isDeletingBooking}>
+            Delete booking
+          </Button>
+        </Modal.Open>
         <Button $variation="secondary" onClick={moveBack}>
           Back
         </Button>
       </ButtonGroup>
+      <Modal.Window name="page-delete-booking">
+        <ConfirmDelete
+          resourceName="booking"
+          disabled={isDeletingBooking}
+          onConfirm={() => deleteBooking(id, { onSuccess: () => navigate(-1)})}
+        />
+
+      </Modal.Window>
+      </Modal>
     </>
   );
 }

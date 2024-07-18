@@ -21,5 +21,5 @@ export function useCheckin() {
     },
     onError: () => toast.error("There was an error while checking in"),
   });
-  return { isCheckingIn, checkin }
+  return { isCheckingIn, checkin };
 }
