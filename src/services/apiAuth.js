@@ -37,3 +37,25 @@ export async function logout() {
   }
 }
 
+export async function signup({ fullName, email, password }) {
+  const { data, error } = await supabase.auth.signUp({
+    email,
+    password,
+    options: {
+      data: {
+        fullName,
+        avatar: ""
+      }
+    }
+  });
+
+  if (error) {
+    throw new Error(error.message)
+  }
+
+  // upload avatar
+
+
+  return data;
+}
+
