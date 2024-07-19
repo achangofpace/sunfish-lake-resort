@@ -1,7 +1,12 @@
 import styled from "styled-components";
+import { format } from "date-fns";
 
 import Heading from "../../ui/Heading";
 import Row from "../../ui/Row";
+import Spinner from "../../ui/Spinner";
+import TodayItem from "./TodayItem";
+
+import useTodayActivity from "./useTodayActivity";
 
 const StyledToday = styled.div`
   /* Box */
@@ -36,14 +41,41 @@ const NoActivity = styled.p`
   margin-top: 0.8rem;
 `;
 
-function Today() {
+function TodayActivity() {
+  const { todayActiveStays, isPending: isLoadingTodayActiveStays } = useTodayActivity();
+  console.log(todayActiveStays);
+  // isLoadingTodayActiveStays = true;
+
+  // function conditionalSpinner() {
+  //   if (isLoadingTodayActiveStays) {
+  //     return <Spinner />;
+  //   }
+  // }
+
+  // function conditionalNoActivity() {
+  //   if (todayActiveStays.length === 0) {
+  //     return <NoActivity>No check-ins or checkouts planned for today</NoActivity>
+  //   }
+  // }
+
   return (
     <StyledToday>
+      <Heading as="h2">Today ({format(new Date(), "MMM dd yyyy")})</Heading>
       <Row type="horizontal">
-        <Heading as="h2">Today</Heading>
+        {/* {conditionalSpinner()} */}
+        {/* {conditionalNoActivity()} */}
+        {isLoadingTodayActiveStays && <Spinner />}
+        {!isLoadingTodayActiveStays && todayActiveStays.length === 0 && <NoActivity>No check-ins or checkouts planned for today</NoActivity>}
+        {!isLoadingTodayActiveStays && todayActiveStays.length > 0 && (
+          <TodayList>
+            {todayActiveStays.map((stay) => (
+              <TodayItem key={stay.id} stay={stay} />
+            ))}
+          </TodayList>
+        )}
       </Row>
     </StyledToday>
   );
 }
 
-export default Today;
+export default TodayActivity;
