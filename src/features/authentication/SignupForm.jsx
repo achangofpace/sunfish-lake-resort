@@ -21,12 +21,8 @@ function SignupForm() {
     );
   }
 
-  function onSubmitError() {
-
-  }
-
   return (
-    <Form onSubmit={handleSubmit(onSubmit, onSubmitError)} >
+    <Form onSubmit={handleSubmit(onSubmit)} >
       <FormRow label="Full name" error={errors?.fullName?.message}>
         <Input
           type="text"
@@ -80,7 +76,12 @@ function SignupForm() {
 
       <FormRow>
         {/* type is an HTML attribute! */}
-        <Button $variation="secondary" type="reset">
+        <Button
+          $variation="secondary"
+          type="reset"
+          onClick={reset}
+          disabled={isSigningUp}
+        >
           Cancel
         </Button>
         <Button disabled={isSigningUp}>Create new user</Button>
