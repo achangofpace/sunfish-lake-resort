@@ -85,7 +85,7 @@ function SalesChart({ bookings, numDays }) {
   const colors = isDarkMode ? darkModeColors : lightModeColors;
   return (
     <StyledSalesChart>
-      <Heading as="h2">Sales</Heading>
+      <Heading as="h2">Sales from {format(allDates[0], "MMM dd yyyy")} &mdash; {format(allDates.at(-1), "MMMM dd yyyy")}</Heading>
       <ResponsiveContainer height={300} width="100%">
         <AreaChart data={daily_sales} height={300} width={700}>
           <XAxis dataKey="label" tick={{fill: colors.text}} tickLine={{ stroke: colors.text }} />
