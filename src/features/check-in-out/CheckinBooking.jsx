@@ -9,12 +9,12 @@ import ButtonText from "../../ui/ButtonText";
 import Checkbox from "../../ui/Checkbox";
 import Spinner from "../../ui/Spinner";
 
-import BookingDataBox from "../../features/bookings/BookingDataBox";
+import BookingDataBox from "../bookings/BookingDataBox";
 
 import { useMoveBack } from "../../hooks/useMoveBack";
 import { useBooking } from "../bookings/useBooking";
 import { formatCurrency } from "../../utils/helpers";
-import { useCheckin } from "./useCheckin";
+import { useCheckIn } from "./useCheckIn";
 import { useSettings } from "../settings/useSettings";
 
 const Box = styled.div`
@@ -25,11 +25,11 @@ const Box = styled.div`
   padding: 2.4rem 4rem;
 `;
 
-function CheckinBooking() {
+function CheckInBooking() {
   const [confirmPaid, setConfirmPaid] = useState(false);
   const [addBreakfast, setAddBreakfast] = useState(false);
-  const { isPending: isLoadingBooking, booking } = useBooking();
-  const { checkin, isCheckingIn } = useCheckin();
+  const { booking, isPending: isLoadingBooking } = useBooking();
+  const { checkIn, isPending: isCheckingIn } = useCheckIn();
   const { settings, isPending: isLoadingSettings } = useSettings();
 
   useEffect(() => setConfirmPaid(booking?.isPaid ?? false), [booking]);
@@ -51,12 +51,12 @@ function CheckinBooking() {
 
   const optionalBreakfastPrice = settings.breakfastPrice * numNights * numGuests;
 
-  function handleCheckin() {
+  function handleCheckIn() {
     if (!confirmPaid || isCheckingIn) {
       return;
     }
     if (addBreakfast) {
-      checkin({
+      checkIn({
         bookingId,
         breakfast: {
           hasBreakfast: true,
@@ -65,7 +65,7 @@ function CheckinBooking() {
         }
       });
     } else {
-      checkin({ bookingId, breakfast: {} });
+      checkIn({ bookingId, breakfast: {} });
     }
   }
 
@@ -110,7 +110,7 @@ function CheckinBooking() {
       </Box>
 
       <ButtonGroup>
-        <Button disabled={!confirmPaid || isCheckingIn} onClick={handleCheckin}>Check in booking #{bookingId}</Button>
+        <Button disabled={!confirmPaid || isCheckingIn} onClick={handleCheckIn}>Check in booking #{bookingId}</Button>
         <Button $variation="secondary" onClick={moveBack}>
           Back
         </Button>
@@ -119,4 +119,4 @@ function CheckinBooking() {
   );
 }
 
-export default CheckinBooking;
+export default CheckInBooking;

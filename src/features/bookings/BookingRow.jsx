@@ -62,8 +62,8 @@ function BookingRow({
   };
 
   const navigate = useNavigate();
-  const { isCheckingOut, checkout } = useCheckout();
-  const { isDeletingBooking, deleteBooking } = useDeleteBooking();
+  const { checkout, isPending: isCheckingOut } = useCheckout();
+  const { deleteBooking, isPending: isDeletingBooking } = useDeleteBooking();
 
   return (
     <Table.Row>

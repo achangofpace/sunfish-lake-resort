@@ -9,10 +9,10 @@ import CabinRow from "./CabinRow";
 import Empty from "../../ui/Empty";
 
 function CabinTable() {
-  const { isPending, cabins } = useCabins();
+  const { cabins, isPending: isLoadingCabins } = useCabins();
   const [searchParams] = useSearchParams();
 
-  if (isPending) {
+  if (isLoadingCabins) {
     return <Spinner />;
   }
 

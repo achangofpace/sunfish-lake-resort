@@ -8,9 +8,9 @@ import { useBookings } from "./useBookings";
 import Pagination from "../../ui/Pagination";
 
 function BookingTable() {
-  const { isPending, bookings, count } = useBookings();
+  const { bookings, count, isPending: isLoadingBookings } = useBookings();
 
-  if (isPending) {
+  if (isLoadingBookings) {
     return <Spinner />;
   }
 

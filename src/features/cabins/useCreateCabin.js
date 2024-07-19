@@ -5,7 +5,7 @@ import { createOrEditCabin as createOrEditCabinApi } from "../../services/apiCab
 export function useCreateCabin() {
   const queryClient = useQueryClient();
 
-  const { mutate: createCabin, isPending: isCreating } = useMutation({
+  const { mutate: createCabin, isPending } = useMutation({
     mutationFn: createOrEditCabinApi,
     onSuccess: () => {
       toast.success("New cabin successfully created");
@@ -16,5 +16,5 @@ export function useCreateCabin() {
     onError: (err) => toast.error(err.message)
   });
 
-  return { isCreating, createCabin };
+  return { createCabin, isPending };
 }

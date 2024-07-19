@@ -22,6 +22,8 @@ const Avatar = styled.img`
 `;
 
 function UserAvatar() {
+  // don't have to check if isPending becuase it's certainly
+  // loaded if we can see this page
   const { user } = useUser();
   const { fullName, avatar } = user.user_metadata;
   return (

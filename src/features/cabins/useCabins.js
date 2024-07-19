@@ -2,10 +2,10 @@ import { useQuery } from "@tanstack/react-query";
 import { getCabins } from "../../services/apiCabins";
 
 export function useCabins() {
-  const { isPending, data: cabins, error } = useQuery({
+  const { data: cabins, error, isPending } = useQuery({
     queryKey: ["cabins"],
     queryFn: getCabins
   });
 
-  return { isPending, cabins, error };
+  return { cabins, error, isPending };
 }

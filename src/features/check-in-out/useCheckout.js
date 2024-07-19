@@ -5,7 +5,7 @@ import { updateBooking } from "../../services/apiBookings";
 
 export function useCheckout() {
   const queryClient = useQueryClient();
-  const { mutate: checkout, isPending: isCheckingOut } = useMutation({
+  const { mutate: checkout, isPending } = useMutation({
     mutationFn: (bookingId) => updateBooking(bookingId, {status: "checked-out"}),
     onSuccess: (data) => {
       toast.success(`Booking #${data.id} successfully checked out`);
@@ -13,5 +13,5 @@ export function useCheckout() {
     },
     onError: () => toast.error("There was an error while checking out")
   });
-  return { checkout, isCheckingOut };
+  return { checkout, isPending };
 }

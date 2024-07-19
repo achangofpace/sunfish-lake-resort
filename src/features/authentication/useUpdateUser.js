@@ -4,7 +4,7 @@ import { updateCurrentUser } from "../../services/apiAuth";
 
 export default function useUpdateUser() {
   const queryClient = useQueryClient();
-  const { mutate: updateUser, isPending: isUpdatingUser } = useMutation({
+  const { mutate: updateUser, isPending } = useMutation({
     mutationFn: updateCurrentUser,
     onSuccess: (data) => {
       console.log(data);
@@ -16,5 +16,5 @@ export default function useUpdateUser() {
     }
   });
 
-  return { isUpdatingUser, updateUser };
+  return { updateUser, isPending };
 }

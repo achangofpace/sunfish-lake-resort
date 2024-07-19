@@ -12,7 +12,7 @@ const EMAIL_REGEX = /\S+@\S+\.\S+/;
 function SignupForm() {
   const { register, formState, getValues, handleSubmit, reset } = useForm();
   const { errors } = formState;
-  const { isSigningUp, signup } = useSignup();
+  const { signup, isPending: isSigningUp } = useSignup();
 
   function onSubmit({ fullName, email, password }) {
     signup(

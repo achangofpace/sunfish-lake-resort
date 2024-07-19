@@ -24,13 +24,13 @@ const HeadingGroup = styled.div`
 `;
 
 function BookingDetail() {
-  const { isPending, booking } = useBooking();
+  const { booking, isPending: isLoadingBooking } = useBooking();
   const moveBack = useMoveBack();
   const navigate = useNavigate();
-  const { checkout, isCheckingOut } = useCheckout();
-  const { deleteBooking, isDeletingBooking } = useDeleteBooking();
+  const { checkout, isPending: isCheckingOut } = useCheckout();
+  const { deleteBooking, isPending: isDeletingBooking } = useDeleteBooking();
 
-  if (isPending) {
+  if (isLoadingBooking) {
     return <Spinner />;
   }
 

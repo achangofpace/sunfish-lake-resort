@@ -6,7 +6,7 @@ import { login as loginApi } from "../../services/apiAuth";
 export default function useLogin() {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
-  const { isPending: isLoggingIn, mutate: login } = useMutation({
+  const { mutate: login, isPending } = useMutation({
     mutationFn: loginApi,
     onSuccess: (user) => {
       queryClient.setQueryData(["user"], user.user);
@@ -17,5 +17,5 @@ export default function useLogin() {
       toast.error("Failed to login");
     }
   });
-  return { isLoggingIn, login };
+  return { login, isPending };
 }

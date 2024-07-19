@@ -1,4 +1,3 @@
-import { useForm } from 'react-hook-form';
 import Form from '../../ui/Form';
 import FormRow from '../../ui/FormRow';
 import Input from '../../ui/Input';
@@ -17,15 +16,11 @@ function UpdateSettingsForm() {
       breakfastPrice
     } = {},
   } = useSettings();
-  const { isUpdating, updateSetting } = useUpdateSettings();
+  const { updateSetting, isPending: isUpdating } = useUpdateSettings();
 
   if (isPending) {
     return <Spinner />;
   }
-
-  // const { register, handleSubmit, getValues, formState } = useForm({
-  //   defaultValues: settings || {}
-  // });
 
   function handleUpdate(e, field) {
     const { value } = e.target;
@@ -34,12 +29,8 @@ function UpdateSettingsForm() {
     }
     updateSetting({ [field]: value });
   }
-  // function onSubmit() {}
-
-  // function onSubmitError() {}
 
   return (
-    // <Form onSubmit={handleSubmit(onSubmit, onSubmitError)}>
     <Form>
       <FormRow label='Minimum nights/booking'>
         <Input

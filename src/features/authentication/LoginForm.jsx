@@ -9,7 +9,7 @@ import useLogin from "./useLogin";
 function LoginForm() {
   const [email, setEmail] = useState("jonas@example.com");
   const [password, setPassword] = useState("kkj");
-  const { isLoggingIn, login } = useLogin();
+  const { login, isPending: isLoggingIn } = useLogin();
 
   function handleSubmit(e) {
     e.preventDefault();

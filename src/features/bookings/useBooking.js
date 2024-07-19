@@ -5,11 +5,11 @@ import { useQuery } from "@tanstack/react-query";
 export function useBooking() {
   const { bookingId } = useParams();
 
-  const { isPending, data: booking, error } = useQuery({
+  const { data: booking, error, isPending } = useQuery({
     queryKey: ["booking", bookingId],
     queryFn: () => getBooking(bookingId),
     retry: false
   });
 
-  return { isPending, booking, error };
+  return { booking, error, isPending };
 }
