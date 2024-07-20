@@ -44,13 +44,13 @@ function CreateCabinForm({ cabinToEdit={}, onCloseModal }) {
     }
   }
 
-  function onSubmitError(issues) {
-    /* can use this to debug */
-  }
+  // function onSubmitError(issues) {
+  //   /* can use this to debug */
+  // }
 
   return (
     <Form
-      onSubmit={handleSubmit(onSubmit, onSubmitError)}
+      onSubmit={handleSubmit(onSubmit/*, onSubmitError*/)}
       type={onCloseModal ? "modal" : "regular"}
     >
       <FormRow
