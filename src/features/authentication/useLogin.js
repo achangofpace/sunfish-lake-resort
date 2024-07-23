@@ -13,7 +13,7 @@ export default function useLogin() {
       navigate("/dashboard", { replace: true });
       toast.success("Successful login");
     },
-    onError: (err) => {
+    onError: () => {
       toast.error("Failed to login");
     }
   });

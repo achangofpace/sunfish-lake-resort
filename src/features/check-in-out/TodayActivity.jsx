@@ -43,8 +43,6 @@ const NoActivity = styled.p`
 
 function TodayActivity() {
   const { todayActiveStays, isPending: isLoadingTodayActiveStays } = useTodayActivity();
-  console.log(todayActiveStays);
-  // isLoadingTodayActiveStays = true;
 
   // function conditionalSpinner() {
   //   if (isLoadingTodayActiveStays) {
