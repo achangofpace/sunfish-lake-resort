@@ -17,7 +17,7 @@ function SignupForm() {
   function onSubmit({ fullName, email, password }) {
     signup(
       { fullName, email, password },
-      { onSettled: reset}
+      { onSettled: () => reset()}
     );
   }
 
