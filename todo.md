@@ -7,3 +7,9 @@
  - [ ] Add variable pricing for cabins
  - [ ] Add a restaurant to the cabins (meh)
  - [ ] Generate an invoice to email to a guest on checkout
+ - [ ] Change icon
+
+# Completed
+ - [✔] Publicize read only user creds on login
+ - [✔] Investigate login screen weird thing
+
