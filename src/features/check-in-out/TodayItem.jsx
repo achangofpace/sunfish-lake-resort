@@ -25,7 +25,9 @@ const Guest = styled.div`
 `;
 
 function TodayItem({ stay }) {
-  const { id, status, guests, numNights } = stay;
+  const { id, status, numNights } = stay;
+  const guests = (stay && stay.guests) || (stay && stay.guests_demo);
+
   return (
     <StyledTodayItem>
       {status === "unconfirmed" && <Tag type="green">Arriving</Tag>}

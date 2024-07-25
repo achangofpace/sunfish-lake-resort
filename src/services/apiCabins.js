@@ -1,7 +1,21 @@
 import supabase, { supabaseUrl } from "./supabase";
+import { getCurrentUser } from "./apiAuth";
+import { DEMO_EMAIL } from "../utils/constants";
+
+async function isDemoCabinsTable() {
+  const currUser = await getCurrentUser();
+  if (currUser.email === DEMO_EMAIL) {
+    return "cabins_demo";
+  } else {
+    return "cabins";
+  }
+}
 
 export async function getCabins() {
-  const { data, error } = await supabase.from("cabins").select("*");
+  const cabins_table = await isDemoCabinsTable();
+  const { data, error } = await supabase
+    .from(cabins_table)
+    .select("*");
   if (error) {
     console.error(error);
     throw new Error("Cabins could not be loaded");
@@ -21,7 +35,8 @@ export async function createOrEditCabin(new_cabin, id) {
   // const duplicatePath = "https://ctclrfjhrxsebgoysfiu.supabase.co/storage/v1/object/public/cabin-images/0.047097928104704145-snake.jpg";
 
   // create new cabin in cabins table
-  let query = supabase.from("cabins"); // querybuilder doesn't send my request until I await or .then()
+  const cabins_table = await isDemoCabinsTable();
+  let query = supabase.from(cabins_table); // querybuilder doesn't send my request until I await or .then()
   if (!id) {
     query = query.insert([{...new_cabin, image: imagePath}]);
   } else {
@@ -57,7 +72,11 @@ export async function createOrEditCabin(new_cabin, id) {
 }
 
 export async function deleteCabin(id) {
-  const { data, error } = await supabase.from("cabins").delete().eq("id", id);
+  const cabins_table = await isDemoCabinsTable();
+  const { data, error } = await supabase
+    .from(cabins_table)
+    .delete()
+    .eq("id", id);
   if (error) {
     console.error(error);
     throw new Error("Cabin could not be deleted");

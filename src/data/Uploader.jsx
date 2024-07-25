@@ -8,47 +8,54 @@ import { bookings } from "./data-bookings";
 import { cabins } from "./data-cabins";
 import { guests } from "./data-guests";
 
-// const originalSettings = {
-//   minBookingLength: 3,
-//   maxBookingLength: 30,
-//   maxGuestsPerBooking: 10,
-//   breakfastPrice: 15,
-// };
+const originalSettings = {
+  minBookingLength: 3,
+  maxBookingLength: 30,
+  maxGuestsPerBooking: 10,
+  breakfastPrice: 15,
+};
 
-async function deleteGuests() {
-  const { error } = await supabase.from("guests").delete().gt("id", 0);
+export async function restoreOriginalSettings() {
+  const { error } = await supabase.from("settings_demo")
+    .update(originalSettings)
+    .eq("id, 1");
   if (error) console.log(error.message);
 }
 
-async function deleteCabins() {
-  const { error } = await supabase.from("cabins").delete().gt("id", 0);
+export async function deleteGuests() {
+  const { error } = await supabase.from("guests_demo").delete().gt("id", 0);
   if (error) console.log(error.message);
 }
 
-async function deleteBookings() {
-  const { error } = await supabase.from("bookings").delete().gt("id", 0);
+export async function deleteCabins() {
+  const { error } = await supabase.from("cabins_demo").delete().gt("id", 0);
   if (error) console.log(error.message);
 }
 
-async function createGuests() {
-  const { error } = await supabase.from("guests").insert(guests);
+export async function deleteBookings() {
+  const { error } = await supabase.from("bookings_demo").delete().gt("id", 0);
   if (error) console.log(error.message);
 }
 
-async function createCabins() {
-  const { error } = await supabase.from("cabins").insert(cabins);
+export async function createGuests() {
+  const { error } = await supabase.from("guests_demo").insert(guests);
   if (error) console.log(error.message);
 }
 
-async function createBookings() {
+export async function createCabins() {
+  const { error } = await supabase.from("cabins_demo").insert(cabins);
+  if (error) console.log(error.message);
+}
+
+export async function createBookings() {
   // Bookings need a guestId and a cabinId. We can't tell Supabase IDs for each object, it will calculate them on its own. So it might be different for different people, especially after multiple uploads. Therefore, we need to first get all guestIds and cabinIds, and then replace the original IDs in the booking data with the actual ones from the DB
   const { data: guestsIds } = await supabase
-    .from("guests")
+    .from("guests_demo")
     .select("id")
     .order("id");
   const allGuestIds = guestsIds.map((cabin) => cabin.id);
   const { data: cabinsIds } = await supabase
-    .from("cabins")
+    .from("cabins_demo")
     .select("id")
     .order("id");
   const allCabinIds = cabinsIds.map((cabin) => cabin.id);
@@ -96,34 +103,56 @@ async function createBookings() {
 
   console.log(finalBookings);
 
-  const { error } = await supabase.from("bookings").insert(finalBookings);
+  const { error } = await supabase.from("bookings_demo").insert(finalBookings);
   if (error) console.log(error.message);
 }
 
+export async function uploadAll() {
+  // setIsLoading(true);
+  // Bookings need to be deleted FIRST
+  await deleteBookings();
+  await deleteGuests();
+  await deleteCabins();
+
+  // Bookings need to be created LAST
+  await createGuests();
+  await createCabins();
+  await createBookings();
+
+  // setIsLoading(false);
+}
+
+export async function uploadBookings() {
+  setIsLoading(true);
+  await deleteBookings();
+  await createBookings();
+  setIsLoading(false);
+}
+
 function Uploader() {
-  const [isLoading, setIsLoading] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false);
 
-  async function uploadAll() {
-    setIsLoading(true);
-    // Bookings need to be deleted FIRST
-    await deleteBookings();
-    await deleteGuests();
-    await deleteCabins();
+  // async function uploadAll() {
+  //   setIsLoading(true);
+  //   // Bookings need to be deleted FIRST
+  //   await deleteBookings();
+  //   await deleteGuests();
+  //   await deleteCabins();
 
-    // Bookings need to be created LAST
-    await createGuests();
-    await createCabins();
-    await createBookings();
+  //   // Bookings need to be created LAST
+  //   await createGuests();
+  //   await createCabins();
+  //   await createBookings();
 
-    setIsLoading(false);
-  }
+  //   setIsLoading(false);
+  // }
 
-  async function uploadBookings() {
-    setIsLoading(true);
-    await deleteBookings();
-    await createBookings();
-    setIsLoading(false);
-  }
+  // async function uploadBookings() {
+  //   setIsLoading(true);
+  //   await deleteBookings();
+  //   await createBookings();
+  //   setIsLoading(false);
+  // }
 
   return (
     <div

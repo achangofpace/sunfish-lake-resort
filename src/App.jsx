@@ -15,6 +15,7 @@ import Account from "./pages/Account";
 import Login from "./pages/Login";
 import PageNotFound from "./pages/PageNotFound";
 
+import Banner from "./ui/Banner";
 import AppLayout from "./ui/AppLayout";
 import ProtectedRoute from "./ui/ProtectedRoute";
 import { DarkModeProvider } from "./context/DarkModeContext";
@@ -42,6 +43,7 @@ function App() {
           <Route
             element={
               <ProtectedRoute>
+                <Banner />
                 <AppLayout />
               </ProtectedRoute>
             }

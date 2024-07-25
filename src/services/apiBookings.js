@@ -1,12 +1,24 @@
 import supabase from "./supabase";
 import { getToday } from "../utils/helpers";
-import { PAGE_SIZE } from "../utils/constants";
+import { DEMO_EMAIL, PAGE_SIZE } from "../utils/constants";
+import { getCurrentUser } from "./apiAuth";
+
+async function isDemoUser() {
+  const currUser = await getCurrentUser();
+  if (currUser.email === DEMO_EMAIL) {
+    return true;
+  }
+  return false;
+}
 
 export async function getBookings({ filter, sortBy, page }) {
+  const isDemo = await isDemoUser();
+  const bookings_table = `bookings${isDemo ? "_demo" : ""}`;
+  const select_string = `id, created_at, startDate, endDate, numNights, numGuests, status, totalPrice, cabins${isDemo ? "_demo" : ""}(name), guests${isDemo ? "_demo" : ""}(fullName, email)`
   let query = supabase
-    .from("bookings")
+    .from(bookings_table)
     .select(
-      "id, created_at, startDate, endDate, numNights, numGuests, status, totalPrice, cabins(name), guests(fullName, email)",
+      select_string,
       { count: "exact" }
     );
 
@@ -35,9 +47,11 @@ export async function getBookings({ filter, sortBy, page }) {
 }
 
 export async function getBooking(id) {
+  const isDemo = await isDemoUser();
+  const bookings_table = `bookings${isDemo ? "_demo" : ""}`;
   const { data, error } = await supabase
-    .from("bookings")
-    .select("*, cabins(*), guests(*)")
+    .from(bookings_table)
+    .select(`*, cabins${isDemo ? "_demo" : ""}(*), guests${isDemo ? "_demo" : ""}(*)`)
     .eq("id", id)
     .single();
 
@@ -53,8 +67,10 @@ export async function getBooking(id) {
 // Useful to get bookings created in the last 30 days, for example.
 // date should be an ISOString
 export async function getBookingsAfterDate(date) {
+  const isDemo = await isDemoUser();
+  const bookings_table = isDemo ? "bookings_demo" : "bookings";
   const { data, error } = await supabase
-    .from("bookings")
+    .from(bookings_table)
     .select("created_at, totalPrice, extrasPrice")
     .gte("created_at", date)
     .lte("created_at", getToday({ end: true }));
@@ -70,9 +86,11 @@ export async function getBookingsAfterDate(date) {
 // Returns all STAYS that are were created after the given date
 // (stays being booking that have already begun (checked in) at time of lookup)
 export async function getStaysAfterDate(date) {
+  const isDemo = await isDemoUser();
+  const bookings_table = isDemo ? "bookings_demo" : "bookings";
   const { data, error } = await supabase
-    .from("bookings")
-    .select("*, guests(fullName)")
+    .from(bookings_table)
+    .select(`*, guests${isDemo ? "_demo" : ""}(fullName)`)
     .gte("startDate", date)
     .lte("startDate", getToday());
 
@@ -86,9 +104,11 @@ export async function getStaysAfterDate(date) {
 
 // Activity means that there is a check in or a check out today
 export async function getStaysTodayActivity() {
+  const isDemo = await isDemoUser();
+  const bookings_table = isDemo ? "bookings_demo" : "bookings";
   const { data, error } = await supabase
-    .from("bookings")
-    .select("*, guests(fullName, nationality, countryFlag)")
+    .from(bookings_table)
+    .select(`*, guests${isDemo ? "_demo" : ""}(fullName, nationality, countryFlag)`)
     .or(
       `and(status.eq.unconfirmed,startDate.eq.${getToday()}),and(status.eq.checked-in,endDate.eq.${getToday()})`
     )
@@ -106,8 +126,10 @@ export async function getStaysTodayActivity() {
 }
 
 export async function updateBooking(id, obj) {
+  const isDemo = await isDemoUser();
+  const bookings_table = isDemo ? "bookings_demo" : "bookings";
   const { data, error } = await supabase
-    .from("bookings")
+    .from(bookings_table)
     .update(obj)
     .eq("id", id)
     .select()
@@ -121,8 +143,12 @@ export async function updateBooking(id, obj) {
 }
 
 export async function deleteBooking(id) {
-  // REMEMBER RLS POLICIES
-  const { data, error } = await supabase.from("bookings").delete().eq("id", id);
+  const isDemo = await isDemoUser();
+  const bookings_table = isDemo ? "bookings_demo" : "bookings";
+  const { data, error } = await supabase
+    .from(bookings_table)
+    .delete()
+    .eq("id", id);
 
   if (error) {
     console.error(error);

@@ -1,3 +1,4 @@
+import { DEMO_EMAIL } from "../utils/constants";
 import supabase, { supabaseUrl } from "./supabase";
 
 export async function login({ email, password }) {
@@ -19,7 +20,7 @@ export async function getCurrentUser() {
   if (!session.session) {
     return null;
   }
-  const { data, error } = await supabase.auth.getUser()
+  const { data, error } = await supabase.auth.getUser();
 
   if (error) {
     throw new Error(error);
@@ -36,6 +37,11 @@ export async function logout() {
 }
 
 export async function signup({ fullName, email, password }) {
+  const currUser = await getCurrentUser();
+  if (currUser.email === DEMO_EMAIL) {
+    return;
+  }
+
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
@@ -55,6 +61,11 @@ export async function signup({ fullName, email, password }) {
 }
 
 export async function updateCurrentUser({ password, fullName, avatar }) {
+  const currUser = await getCurrentUser();
+  if (currUser.email === DEMO_EMAIL) {
+    return;
+  }
+
   // 1. update password OR fullName (not both)
   let updateData;
   if (password) {
@@ -98,4 +109,3 @@ export async function updateCurrentUser({ password, fullName, avatar }) {
 
   return updated_user;
 }
-

@@ -115,9 +115,12 @@ function BookingDataBox({ booking }) {
     hasBreakfast,
     observations,
     isPaid,
-    guests: { fullName: guestName, email, country, countryFlag, nationalID },
-    cabins: { name: cabinName },
   } = booking;
+
+  const guests = (booking && booking.guests) || (booking && booking.guests_demo);
+  const { fullName: guestName, email, country, countryFlag, nationalID } = guests;
+  const cabinName = (booking && booking.cabins && booking.cabins.name)
+    || (booking && booking.cabins_demo && booking.cabins_demo.name);
 
   return (
     <StyledBookingDataBox>

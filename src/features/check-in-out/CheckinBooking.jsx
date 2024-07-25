@@ -42,12 +42,13 @@ function CheckInBooking() {
 
   const {
     id: bookingId,
-    guests,
     totalPrice,
     numGuests,
     hasBreakfast,
     numNights,
   } = booking;
+
+  const guests = (booking && booking.guests) || (booking && booking.guests_demo);
 
   const optionalBreakfastPrice = settings.breakfastPrice * numNights * numGuests;
 

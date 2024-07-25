@@ -5,10 +5,11 @@ import Input from "../../ui/Input";
 import FormRowVertical from "../../ui/FormRowVertical";
 import SpinnerMini from "../../ui/SpinnerMini";
 import useLogin from "./useLogin";
+import { uploadAll } from "../../data/Uploader";
 
 const DEMO_USER = {
-  email: "read_only_demo@example.com",
-  password: "READ_ONLY_DEMO"
+  email: "demo@example.com",
+  password: "DEMO_USER"
 };
 
 function LoginForm() {
@@ -22,6 +23,7 @@ function LoginForm() {
       return;
     }
     login({ email, password }, {onSettled: () => {
+      uploadAll();
       setEmail("");
       setPassword("");
     }});
