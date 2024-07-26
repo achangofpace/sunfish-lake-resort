@@ -1,8 +1,25 @@
-# React + Vite
+# Sunfish Lakes
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React web app using
+- React Query
+- React Hook Form
+- Styled Components
+- with a Supabase backend
+    - signup using email confirmation
+    - authentication
+    - managed Postgres with Row Level Security policies
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+for managing reservations at a fictional resort.
+
+Demonstrates fluency in React features (e.g. React Context and React Portal) and professional practices (advanced use of the compound component pattern and the render props pattern).
+
+### Try it out! (deployed on Netlify) at https://sunfish-lakes-resort.netlify.app/
+
+![screenshot of dashboard](screenshots/sfl-dashboard.png)
+
+![screenshot of dashboard in dark mode](screenshots/sfl-darkmode-dashboard.png)
+
+![screenshot of bookings page](screenshots/sfl-bookings.png)
+
+![screenshot of cabins page](screenshots/sfl-cabins.png)
