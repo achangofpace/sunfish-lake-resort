@@ -7,7 +7,7 @@ import GlobalStyles from "./styles/GlobalStyles";
 import Dashboard from "./pages/Dashboard";
 import Bookings from "./pages/Bookings";
 import Booking from "./pages/Booking";
-import CheckIn from "./pages/CheckIn.jsx";
+import CheckIn from "./pages/CheckIn";
 import Cabins from "./pages/Cabins";
 import Users from "./pages/Users";
 import Settings from "./pages/Settings";
