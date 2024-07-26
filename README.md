@@ -1,4 +1,4 @@
-# Sunfish Lakes
+# Sunfish Lakes Resort
 
 A React web app using
 - React Query
@@ -14,9 +14,12 @@ for managing reservations at a fictional resort.
 
 Demonstrates fluency in React features (e.g. React Context and React Portal) and professional practices (advanced use of the compound component pattern and the render props pattern).
 
-### Try it out!
+## Try it out!
 - deployed on Vercel with CI at https://sunfish-lakes-resort.vercel.app/
 - deployed on Netlify at https://sunfish-lakes-resort.netlify.app/
+
+<br />
+<br />
 
 ![screenshot of dashboard](screenshots/sfl-dashboard.png)
 
