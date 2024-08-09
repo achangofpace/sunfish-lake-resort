@@ -15,7 +15,7 @@ for managing reservations at a fictional resort.
 Demonstrates fluency in React features (e.g. React Context and React Portal) and professional practices (advanced use of the compound component pattern and the render props pattern).
 
 ## Try it out!
-- deployed on Vercel with CI at https://sunfish-lakes-resort.vercel.app/
+- deployed on Vercel with CI at https://sunfish-lakes-resort-management.vercel.app/
 - deployed on Netlify at https://sunfish-lakes-resort.netlify.app/
 
 <br />
